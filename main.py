@@ -77,6 +77,32 @@ async def start_game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         f"Qo‘shilish uchun do‘stingizni taklif qiling yoki boshqa xonaga qo‘shiling! 😉",
         parse_mode="HTML"
     )
+async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    rules_text = (
+        "📜 *O‘yin qoidalari:*\n\n"
+        "1️⃣ O‘yin boshlangandan so‘ng, bot yashirin so‘zni tanlaydi.\n"
+        "2️⃣ Foydalanuvchi yashirin so‘zning harflarini taxmin qiladi.\n"
+        "3️⃣ Har bir noto‘g‘ri taxmin uchun bitta urinish kamayadi.\n"
+        "4️⃣ Urinishlar tugasa va so‘z topilmasa, bot yutadi.\n"
+        "5️⃣ To‘g‘ri so‘z topilganda foydalanuvchi g‘olib bo‘ladi!\n\n"
+        "🎯 *Maslahatlar:*\n"
+        "- Yashirin so‘z mavzusini tushunishga harakat qiling.\n"
+        "- Noto‘g‘ri harflarni qaytadan kiritmang.\n\n"
+        "✅ Omad tilaymiz va yaxshi o‘yin qiling! 🎉"
+    )
+    await update.message.reply_text(rules_text, parse_mode='Markdown')
+
+async def info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    info_text = (
+        "🧑‍💻 <b>Dasturchi haqida ma'lumot:</b>\n\n"
+        "👤 <b>Ism</b>: <a href='https://anodra.uz'>ANODRA</a>\n"
+        "💼 <b>Mutaxassislik</b>: Engineer-programmer, computer scientist\n"
+        "📧 <b>Aloqa</b>: <a href='mailto:dinmuhammadyagafarov@gmail.com'>dinmuhammadyagafarov@gmail.com</a>\n\n"
+        "🤖 Ushbu bot sizga qulaylik yaratish maqsadida ishlab chiqilgan."
+    )
+
+    await update.message.reply_text(info_text, parse_mode='HTML')
+
 
 # Harfni tanlash
 async def guess_letter(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -234,6 +260,8 @@ def main() -> None:
     # Buyruqlarni sozlash
     application.add_handler(CommandHandler("start", start_game))
     application.add_handler(CommandHandler("status", game_status))
+    application.add_handler(CommandHandler("help", help))
+    application.add_handler(CommandHandler("info", info))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, guess_letter))
     application.add_handler(CallbackQueryHandler(button_handler))
 
@@ -242,4 +270,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    print("Bosh ishlamoqda...")
     main()
